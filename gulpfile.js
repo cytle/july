@@ -1,10 +1,17 @@
-var gulp = require('gulp');
-var git = require('gulp-git');
+const gulp = require('gulp');
+const git = require('gulp-git');
+const path = require('path');
+const eslint = require('gulp-eslint');
+const debug = require('gulp-debug');
 
-// Run git init
-// src is the root folder for git to initialize
+const distDir = path.resolve(__dirname, './dist/d');
+
 gulp.task('diff', function(){
-    return gulp.src('./rjs', { cwd: '../static-meal' })
-        .pipe(git.diff('master', {log: true}))
-        .pipe(gulp.dest('./dist/diff.out'));
+    const src = path.resolve(process.cwd(), 'rjs/**');
+    return gulp.src(src)
+        .pipe(git.diff('master'))
+        .pipe(debug({ title: 'diff:' }))
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(gulp.dest(distDir));
 });
