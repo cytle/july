@@ -6,7 +6,7 @@ require("./gulpfile");
 // Create the GitStats instance
 var g1 = new GitStats();
 
-process.chdir('../static-meal');
+process.chdir('../test-eslint');
 
 gulp.start('diff');
 
